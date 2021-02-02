@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TestApp</string>
+    <string name="title_albums">Albums</string>
+    <string name="title_database">Database</string>
+    <string name="title_location">Location</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+</resources>
