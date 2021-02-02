@@ -34,6 +34,7 @@ class PhotoAdapter(private val interaction: (PhotoItem) -> Unit) :
         fun bind(item: PhotoItem) {
             Picasso.get()
                 .load(item.thumbnailUrl)
+                .placeholder(R.drawable.loading_anim)
                 .into(itemPhotoBinding.ivPhoto)
         }
     }

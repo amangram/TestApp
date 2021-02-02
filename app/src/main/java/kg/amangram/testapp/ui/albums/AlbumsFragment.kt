@@ -1,6 +1,7 @@
 package kg.amangram.testapp.ui.albums
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,13 +38,14 @@ class AlbumsFragment : Fragment() {
         binding = FragmentAlbumsBinding.bind(view)
         setAdapter()
         getAlbums()
+        initListeners()
     }
 
     private fun setAdapter() {
-        albumAdapter = AlbumsAdapter ({
+        albumAdapter = AlbumsAdapter({
             val bundle = bundleOf(Constants.ALBUM to it)
             findNavController().navigate(R.id.action_navigation_albums_to_photosFragment, bundle)
-        },{})
+        }, {})
         val mLinearLayout = LinearLayoutManager(activity)
         binding?.rvAlbums?.apply {
             adapter = albumAdapter
@@ -51,18 +53,25 @@ class AlbumsFragment : Fragment() {
         }
     }
 
+    private fun initListeners() {
+        binding?.swipeRefreshAlbums?.setOnRefreshListener {
+            viewModel.getAlbums()
+        }
+    }
+
     private fun getAlbums() {
+        viewModel.getAlbums()
         viewModel.albums.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is State.Success -> {
                     binding?.swipeRefreshAlbums?.isRefreshing = false
                     albumAdapter.swapData(state.data)
                 }
-                is State.Loading->{
+                is State.Loading -> {
                     binding?.swipeRefreshAlbums?.isRefreshing = true
                 }
-                is State.Failed->{
-                    Toast.makeText(context,state.message,Toast.LENGTH_SHORT).show()
+                is State.Failed -> {
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                     binding?.swipeRefreshAlbums?.isRefreshing = false
                 }
             }

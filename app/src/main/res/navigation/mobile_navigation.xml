@@ -29,6 +29,6 @@
     <fragment
         android:id="@+id/photosFragment"
         android:name="kg.amangram.testapp.ui.photos.PhotosFragment"
-        android:label="photos_fragment"
+        android:label="@string/photos"
         tools:layout="@layout/photos_fragment" />
 </navigation>

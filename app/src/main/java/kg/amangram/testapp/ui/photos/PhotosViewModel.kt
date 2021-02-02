@@ -21,7 +21,6 @@ class PhotosViewModel(
     private var disposable = CompositeDisposable()
     val isExist: LiveData<Boolean> = exists()
 
-
     fun getPhotos(): LiveData<State<AlbumDetailResponse>> {
         val photos = MutableLiveData<State<AlbumDetailResponse>>()
         photos.postValue(State.loading())
